@@ -10,7 +10,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     public MainGamePanel(Context context) {
         super(context);
         getHolder().addCallback(this);
-        thread = new MainThread();
+        thread = new MainThread(getHolder(), this);
         setFocusable(true);
     }
 
