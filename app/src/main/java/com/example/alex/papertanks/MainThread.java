@@ -1,5 +1,6 @@
 package com.example.alex.papertanks;
 
+import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 public class MainThread extends Thread {
@@ -19,8 +20,17 @@ public class MainThread extends Thread {
 
     @Override
     public void run() {
+        Canvas canvas;
         while (running) {
-
+            canvas = null;
+            try {
+                canvas = surfaceHolder.lockCanvas();
+                synchronized (surfaceHolder) {
+                    this.gamePanel.onDraw(canvas);
+                }
+            } finally {
+                if (canvas != null) surfaceHolder.unlockCanvasAndPost(canvas);
+            }
         }
     }
 }
