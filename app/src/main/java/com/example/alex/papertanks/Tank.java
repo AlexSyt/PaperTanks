@@ -4,8 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 public class Tank {
-    private static final int WIDTH = 50;
-    private static final int HEIGHT = 50;
+    private static final int BITMAP_WIDTH = 50;
+    private static final int BITMAP_HEIGHT = 50;
     private Bitmap bitmap;
     private int x;
     private int y;
@@ -16,7 +16,7 @@ public class Tank {
     private Team team;
 
     public Tank(Bitmap bitmap, int x, int y, Team team) {
-        this.bitmap = Bitmap.createScaledBitmap(bitmap, WIDTH, HEIGHT, false);
+        this.bitmap = Bitmap.createScaledBitmap(bitmap, BITMAP_WIDTH, BITMAP_HEIGHT, false);
         this.x = x;
         this.y = y;
         this.team = team;
@@ -84,6 +84,14 @@ public class Tank {
 
     public Team getTeam() {
         return team;
+    }
+
+    public static int getBitmapWidth() {
+        return BITMAP_WIDTH;
+    }
+
+    public static int getBitmapHeight() {
+        return BITMAP_HEIGHT;
     }
 
     public void draw(Canvas canvas) {
