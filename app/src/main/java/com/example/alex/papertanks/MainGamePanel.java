@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -16,6 +17,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     private int displayHeight;
     private ArrayList<Tank> blueTanks;
     private ArrayList<Tank> redTanks;
+    private ArrayList<Tank> tanks;
 
     public MainGamePanel(Context context, int displayWidth, int displayHeight) {
         super(context);
@@ -45,6 +47,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         redTanks.add(new Tank(red, displayWidth - tankWidth - indent, 0, Team.RED));
         redTanks.add(new Tank(red, displayWidth - tankWidth - indent, (displayHeight / 2) - (tankHeight / 2), Team.RED));
         redTanks.add(new Tank(red, displayWidth - tankWidth - indent, displayHeight - tankHeight, Team.RED));
+
+        tanks = new ArrayList<>(blueTanks);
+        tanks.addAll(redTanks);
     }
 
     @Override
@@ -71,6 +76,42 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
             }
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+
+        if (action == MotionEvent.ACTION_DOWN) {
+            for (int i = 0; i < tanks.size(); i++)
+                tanks.get(i).handleActionDown((int) event.getX(), (int) event.getY());
+        }
+
+        if (action == MotionEvent.ACTION_MOVE) {
+            Tank selected = getTouchedTank();
+            if (selected != null && selected.isTouched()) {
+                selected.setX((int) event.getX());
+                selected.setY((int) event.getY());
+            }
+        }
+
+        if (action == MotionEvent.ACTION_UP) {
+            Tank selected = getTouchedTank();
+            if (selected != null && selected.isTouched())
+                selected.setTouched(false);
+        }
+
+        return true;
+    }
+
+    private Tank getTouchedTank() {
+        Tank selected = null;
+        for (int i = 0; i < tanks.size(); i++) {
+            selected = tanks.get(i);
+            if (selected.isTouched())
+                break;
+        }
+        return selected;
     }
 
     @Override
