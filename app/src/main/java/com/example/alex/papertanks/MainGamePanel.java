@@ -31,19 +31,20 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         redTanks = new ArrayList<>();
         int tankWidth = 300;
         int tankHeight = 300;
+        int indent = 50;
 
         Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.blue_tank);
         blue = Bitmap.createScaledBitmap(blue, tankWidth, tankHeight, false);
         Bitmap red = BitmapFactory.decodeResource(getResources(), R.drawable.red_tank);
         red = Bitmap.createScaledBitmap(red, tankWidth, tankHeight, false);
 
-        blueTanks.add(new Tank(blue, 0, 0, Team.BLUE));
-        blueTanks.add(new Tank(blue, 0, (displayHeight / 2) - (tankHeight / 2), Team.BLUE));
-        blueTanks.add(new Tank(blue, 0, displayHeight - tankHeight, Team.BLUE));
+        blueTanks.add(new Tank(blue, 0 + indent, 0, Team.BLUE));
+        blueTanks.add(new Tank(blue, 0 + indent, (displayHeight / 2) - (tankHeight / 2), Team.BLUE));
+        blueTanks.add(new Tank(blue, 0 + indent, displayHeight - tankHeight, Team.BLUE));
 
-        redTanks.add(new Tank(red, displayWidth - tankWidth, 0, Team.RED));
-        redTanks.add(new Tank(red, displayWidth - tankWidth, (displayHeight / 2) - (tankHeight / 2), Team.RED));
-        redTanks.add(new Tank(red, displayWidth - tankWidth, displayHeight - tankHeight, Team.RED));
+        redTanks.add(new Tank(red, displayWidth - tankWidth - indent, 0, Team.RED));
+        redTanks.add(new Tank(red, displayWidth - tankWidth - indent, (displayHeight / 2) - (tankHeight / 2), Team.RED));
+        redTanks.add(new Tank(red, displayWidth - tankWidth - indent, displayHeight - tankHeight, Team.RED));
     }
 
     @Override
