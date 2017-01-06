@@ -40,9 +40,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         Bitmap red = BitmapFactory.decodeResource(getResources(), R.drawable.red_tank);
         red = Bitmap.createScaledBitmap(red, tankWidth, tankHeight, false);
 
-        blueTanks.add(new Tank(blue, 0 + indent, 0, Team.BLUE));
-        blueTanks.add(new Tank(blue, 0 + indent, (displayHeight / 2) - (tankHeight / 2), Team.BLUE));
-        blueTanks.add(new Tank(blue, 0 + indent, displayHeight - tankHeight, Team.BLUE));
+        blueTanks.add(new Tank(blue, indent, 0, Team.BLUE));
+        blueTanks.add(new Tank(blue, indent, (displayHeight / 2) - (tankHeight / 2), Team.BLUE));
+        blueTanks.add(new Tank(blue, indent, displayHeight - tankHeight, Team.BLUE));
 
         redTanks.add(new Tank(red, displayWidth - tankWidth - indent, 0, Team.RED));
         redTanks.add(new Tank(red, displayWidth - tankWidth - indent, (displayHeight / 2) - (tankHeight / 2), Team.RED));
@@ -73,7 +73,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
                 thread.join();
                 retry = false;
             } catch (InterruptedException e) {
-
+                // do something
             }
         }
     }
@@ -83,8 +83,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         int action = event.getAction();
 
         if (action == MotionEvent.ACTION_DOWN) {
-            for (int i = 0; i < tanks.size(); i++)
-                tanks.get(i).handleActionDown((int) event.getX(), (int) event.getY());
+            for (Tank tank : tanks) tank.handleActionDown((int) event.getX(), (int) event.getY());
         }
 
         if (action == MotionEvent.ACTION_MOVE) {
@@ -106,8 +105,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     private Tank getTouchedTank() {
         Tank selected = null;
-        for (int i = 0; i < tanks.size(); i++) {
-            selected = tanks.get(i);
+        for (Tank tank : tanks) {
+            selected = tank;
             if (selected.isTouched())
                 break;
         }
