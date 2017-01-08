@@ -2,11 +2,16 @@ package com.example.alex.papertanks;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 public class Tank {
     private Bitmap bitmap;
-    private int x;
-    private int y;
+    private int xBitmap;
+    private int yBitmap;
+    private int xTankLeftTop;
+    private int yTankLeftTop;
+    private int xTankRightBottom;
+    private int yTankRightBottom;
     private int health;
     private boolean touched;
     private boolean selected;
@@ -15,8 +20,8 @@ public class Tank {
 
     public Tank(Bitmap bitmap, int x, int y, Team team) {
         this.bitmap = bitmap;
-        this.x = x;
-        this.y = y;
+        this.xBitmap = x;
+        this.yBitmap = y;
         this.team = team;
         health = 100;
         touched = false;
@@ -33,19 +38,19 @@ public class Tank {
     }
 
     public int getX() {
-        return x;
+        return xBitmap;
     }
 
     public void setX(int x) {
-        this.x = x;
+        this.xBitmap = x;
     }
 
     public int getY() {
-        return y;
+        return yBitmap;
     }
 
     public void setY(int y) {
-        this.y = y;
+        this.yBitmap = y;
     }
 
     public int getHealth() {
@@ -85,15 +90,33 @@ public class Tank {
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, x, y, null);
+        canvas.drawBitmap(bitmap, xBitmap, yBitmap, null);
+
+
+        Paint p = new Paint();
+        p.setStyle(Paint.Style.STROKE);
+        initTankCoordinates();
+        canvas.drawRect(xTankLeftTop, yTankLeftTop, xTankRightBottom, yTankRightBottom, p);
+    }
+
+    private void initTankCoordinates() {
+        if (this.team == Team.BLUE) {
+            xTankLeftTop = xBitmap + bitmap.getWidth() / 6;
+            xTankRightBottom = xBitmap + (bitmap.getWidth() / 5) * 4;
+        } else if (this.team == Team.RED) {
+            xTankLeftTop = xBitmap + bitmap.getWidth() / 6;
+            xTankRightBottom = xBitmap + (bitmap.getWidth() / 7) * 6;
+        }
+        yTankLeftTop = (int) (yBitmap + bitmap.getHeight() / 3.8);
+        yTankRightBottom = yBitmap + (bitmap.getHeight() / 3) * 2;
     }
 
     public void handleActionDown(int eventX, int eventY) {
-        if (eventX >= (x - bitmap.getWidth() / 2) && (eventX <= (x + bitmap.getWidth() / 2))) {
-            if (eventY >= (y - bitmap.getHeight() / 2) && (y <= (y + bitmap.getHeight() / 2)))
-                setTouched(true);
-            else setTouched(false);
-        } else setTouched(false);
+        if (eventX >= (xTankLeftTop) && (eventX <= (xTankRightBottom))) {
+            if (eventY >= (yTankLeftTop) && (yBitmap <= (yTankRightBottom)))
+                this.touched = true;
+            else this.touched = false;
+        } else this.touched = false;
     }
 }
 
