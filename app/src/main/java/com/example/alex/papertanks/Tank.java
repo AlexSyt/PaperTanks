@@ -29,28 +29,12 @@ public class Tank {
         destroyed = false;
     }
 
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
-
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
-    }
-
     public int getX() {
         return xBitmap;
     }
 
-    public void setX(int x) {
-        this.xBitmap = x;
-    }
-
     public int getY() {
         return yBitmap;
-    }
-
-    public void setY(int y) {
-        this.yBitmap = y;
     }
 
     public int getHealth() {
@@ -117,6 +101,11 @@ public class Tank {
                 this.touched = true;
             else this.touched = false;
         } else this.touched = false;
+    }
+
+    public void move(float dx, float dy){
+        xBitmap += dx;
+        yBitmap += dy;
     }
 }
 
