@@ -9,17 +9,15 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import java.util.ArrayList;
-
 public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
     private int displayWidth;
     private int displayHeight;
     private float xTouch;
     private float yTouch;
-    private ArrayList<Tank> blueTanks;
-    private ArrayList<Tank> redTanks;
-    private ArrayList<Tank> tanks;
+    private int tankCount;
+    private Tank[] tanks;
+    private Tank SELECTED;
 
     public MainGamePanel(Context context, int displayWidth, int displayHeight) {
         super(context);
@@ -31,8 +29,6 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     private void initTanks() {
-        blueTanks = new ArrayList<>();
-        redTanks = new ArrayList<>();
         int tankBitmapWidth = 300;
         int tankBitmapHeight = 300;
         int indent = 50;
@@ -42,16 +38,17 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         Bitmap red = BitmapFactory.decodeResource(getResources(), R.drawable.red_tank);
         red = Bitmap.createScaledBitmap(red, tankBitmapWidth, tankBitmapHeight, false);
 
-        blueTanks.add(new Tank(blue, indent, 0, Team.BLUE));
-        blueTanks.add(new Tank(blue, indent, (displayHeight / 2) - (tankBitmapHeight / 2), Team.BLUE));
-        blueTanks.add(new Tank(blue, indent, displayHeight - tankBitmapHeight, Team.BLUE));
+        tanks = new Tank[6];
+        tanks[0] = new Tank(blue, indent, 0, Team.BLUE);
+        tanks[1] = new Tank(red, displayWidth - tankBitmapWidth - indent, 0, Team.RED);
+        tanks[2] = new Tank(blue, indent, (displayHeight / 2) - (tankBitmapHeight / 2), Team.BLUE);
+        tanks[3] = new Tank(red, displayWidth - tankBitmapWidth - indent, (displayHeight / 2) - (tankBitmapHeight / 2), Team.RED);
+        tanks[4] = new Tank(blue, indent, displayHeight - tankBitmapHeight, Team.BLUE);
+        tanks[5] = new Tank(red, displayWidth - tankBitmapWidth - indent, displayHeight - tankBitmapHeight, Team.RED);
 
-        redTanks.add(new Tank(red, displayWidth - tankBitmapWidth - indent, 0, Team.RED));
-        redTanks.add(new Tank(red, displayWidth - tankBitmapWidth - indent, (displayHeight / 2) - (tankBitmapHeight / 2), Team.RED));
-        redTanks.add(new Tank(red, displayWidth - tankBitmapWidth - indent, displayHeight - tankBitmapHeight, Team.RED));
-
-        tanks = new ArrayList<>(blueTanks);
-        tanks.addAll(redTanks);
+        SELECTED = tanks[0];
+        SELECTED.setSelected(true);
+        tankCount = 1;
     }
 
     @Override
@@ -118,12 +115,18 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         return selected;
     }
 
+    private void selectNextTank() {
+        if (tankCount > 5) tankCount = 0;
+        SELECTED.setSelected(false);
+        SELECTED = tanks[tankCount];
+        SELECTED.setSelected(true);
+        tankCount++;
+    }
+
     @Override
     public void onDraw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
-        for (int i = 0; i < 3; i++) {
-            blueTanks.get(i).draw(canvas);
-            redTanks.get(i).draw(canvas);
-        }
+        for (Tank tank : tanks)
+            tank.draw(canvas);
     }
 }

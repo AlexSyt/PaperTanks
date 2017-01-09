@@ -2,6 +2,7 @@ package com.example.alex.papertanks;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 public class Tank {
@@ -79,8 +80,14 @@ public class Tank {
 
         Paint p = new Paint();
         p.setStyle(Paint.Style.STROKE);
+        Paint pSelected = new Paint();
+        pSelected.setStyle(Paint.Style.STROKE);
+        pSelected.setColor(Color.GREEN);
         initTankCoordinates();
-        canvas.drawRect(xTankLeftTop, yTankLeftTop, xTankRightBottom, yTankRightBottom, p);
+        if (selected)
+            canvas.drawRect(xTankLeftTop, yTankLeftTop, xTankRightBottom, yTankRightBottom, pSelected);
+        else
+            canvas.drawRect(xTankLeftTop, yTankLeftTop, xTankRightBottom, yTankRightBottom, p);
     }
 
     private void initTankCoordinates() {
@@ -96,14 +103,12 @@ public class Tank {
     }
 
     public void handleActionDown(int eventX, int eventY) {
-        if (eventX >= (xTankLeftTop) && (eventX <= (xTankRightBottom))) {
-            if (eventY >= (yTankLeftTop) && (yBitmap <= (yTankRightBottom)))
-                this.touched = true;
-            else this.touched = false;
-        } else this.touched = false;
+        if (eventX >= (xTankLeftTop) && (eventX <= (xTankRightBottom)))
+            this.touched = eventY >= (yTankLeftTop) && (yBitmap <= (yTankRightBottom));
+        else this.touched = false;
     }
 
-    public void move(float dx, float dy){
+    public void move(float dx, float dy) {
         xBitmap += dx;
         yBitmap += dy;
     }
