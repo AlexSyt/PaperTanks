@@ -81,7 +81,6 @@ public class Tank {
         Paint p = new Paint();
         p.setStyle(Paint.Style.STROKE);
         Paint pSelected = new Paint();
-        pSelected.setStyle(Paint.Style.STROKE);
         pSelected.setColor(Color.GREEN);
         initTankCoordinates();
         if (selected)
@@ -104,7 +103,7 @@ public class Tank {
 
     public void handleActionDown(int eventX, int eventY) {
         if (eventX >= (xTankLeftTop) && (eventX <= (xTankRightBottom)))
-            this.touched = eventY >= (yTankLeftTop) && (yBitmap <= (yTankRightBottom));
+            this.touched = eventY >= (yTankLeftTop) && (eventY <= (yTankRightBottom));
         else this.touched = false;
     }
 

@@ -17,7 +17,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     private float yTouch;
     private int tankCount;
     private Tank[] tanks;
-    private Tank SELECTED;
+    private Tank selected;
 
     public MainGamePanel(Context context, int displayWidth, int displayHeight) {
         super(context);
@@ -46,8 +46,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         tanks[4] = new Tank(blue, indent, displayHeight - tankBitmapHeight, Team.BLUE);
         tanks[5] = new Tank(red, displayWidth - tankBitmapWidth - indent, displayHeight - tankBitmapHeight, Team.RED);
 
-        SELECTED = tanks[0];
-        SELECTED.setSelected(true);
+        selected = tanks[0];
+        selected.setSelected(true);
         tankCount = 1;
     }
 
@@ -84,12 +84,11 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         if (action == MotionEvent.ACTION_DOWN) {
             xTouch = event.getX();
             yTouch = event.getY();
-            for (Tank tank : tanks) tank.handleActionDown((int) event.getX(), (int) event.getY());
+            selected.handleActionDown((int) event.getX(), (int) event.getY());
         }
 
         if (action == MotionEvent.ACTION_MOVE) {
-            Tank selected = getTouchedTank();
-            if (selected != null && selected.isTouched()) {
+            if (selected.isTouched()) {
                 selected.move(event.getX() - xTouch, event.getY() - yTouch);
                 xTouch = event.getX();
                 yTouch = event.getY();
@@ -97,29 +96,20 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         }
 
         if (action == MotionEvent.ACTION_UP) {
-            Tank selected = getTouchedTank();
-            if (selected != null && selected.isTouched())
+            if (selected.isTouched()) {
                 selected.setTouched(false);
+                selectNextTank();
+            }
         }
 
         return true;
     }
 
-    private Tank getTouchedTank() {
-        Tank selected = null;
-        for (Tank tank : tanks) {
-            selected = tank;
-            if (selected.isTouched())
-                break;
-        }
-        return selected;
-    }
-
     private void selectNextTank() {
         if (tankCount > 5) tankCount = 0;
-        SELECTED.setSelected(false);
-        SELECTED = tanks[tankCount];
-        SELECTED.setSelected(true);
+        selected.setSelected(false);
+        selected = tanks[tankCount];
+        selected.setSelected(true);
         tankCount++;
     }
 
