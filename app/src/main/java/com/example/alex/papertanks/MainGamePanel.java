@@ -29,22 +29,21 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     private void initTanks() {
-        int tankBitmapWidth = 300;
-        int tankBitmapHeight = 300;
-        int indent = 50;
+        int tankBitmapSize = displayWidth / 4;
+        int indent = tankBitmapSize / 6;
 
         Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.blue_tank);
-        blue = Bitmap.createScaledBitmap(blue, tankBitmapWidth, tankBitmapHeight, false);
+        blue = Bitmap.createScaledBitmap(blue, tankBitmapSize, tankBitmapSize, false);
         Bitmap red = BitmapFactory.decodeResource(getResources(), R.drawable.red_tank);
-        red = Bitmap.createScaledBitmap(red, tankBitmapWidth, tankBitmapHeight, false);
+        red = Bitmap.createScaledBitmap(red, tankBitmapSize, tankBitmapSize, false);
 
         tanks = new Tank[6];
         tanks[0] = new Tank(blue, indent, 0, Team.BLUE);
-        tanks[1] = new Tank(red, displayWidth - tankBitmapWidth - indent, 0, Team.RED);
-        tanks[2] = new Tank(blue, indent, (displayHeight / 2) - (tankBitmapHeight / 2), Team.BLUE);
-        tanks[3] = new Tank(red, displayWidth - tankBitmapWidth - indent, (displayHeight / 2) - (tankBitmapHeight / 2), Team.RED);
-        tanks[4] = new Tank(blue, indent, displayHeight - tankBitmapHeight, Team.BLUE);
-        tanks[5] = new Tank(red, displayWidth - tankBitmapWidth - indent, displayHeight - tankBitmapHeight, Team.RED);
+        tanks[1] = new Tank(red, displayWidth - tankBitmapSize - indent, 0, Team.RED);
+        tanks[2] = new Tank(blue, indent, (displayHeight / 2) - (tankBitmapSize / 2), Team.BLUE);
+        tanks[3] = new Tank(red, displayWidth - tankBitmapSize - indent, (displayHeight / 2) - (tankBitmapSize / 2), Team.RED);
+        tanks[4] = new Tank(blue, indent, displayHeight - tankBitmapSize, Team.BLUE);
+        tanks[5] = new Tank(red, displayWidth - tankBitmapSize - indent, displayHeight - tankBitmapSize, Team.RED);
 
         selected = tanks[0];
         selected.setSelected(true);
