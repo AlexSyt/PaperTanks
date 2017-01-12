@@ -3,18 +3,18 @@ package com.example.alex.papertanks;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
-public class MainThread extends Thread {
+class MainThread extends Thread {
     private boolean running;
-    private SurfaceHolder surfaceHolder;
+    private final SurfaceHolder surfaceHolder;
     private MainGamePanel gamePanel;
 
-    public MainThread(SurfaceHolder surfaceHolder, MainGamePanel gamePanel) {
+    MainThread(SurfaceHolder surfaceHolder, MainGamePanel gamePanel) {
         super();
         this.surfaceHolder = surfaceHolder;
         this.gamePanel = gamePanel;
     }
 
-    public void setRunning(boolean running) {
+    void setRunning(boolean running) {
         this.running = running;
     }
 
