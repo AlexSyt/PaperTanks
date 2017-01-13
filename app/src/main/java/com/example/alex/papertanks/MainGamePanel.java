@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
+public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
     private int displayWidth;
     private int displayHeight;
@@ -19,7 +19,7 @@ class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Tank[] tanks;
     private Tank selected;
 
-    MainGamePanel(Context context, int displayWidth, int displayHeight) {
+    public MainGamePanel(Context context, int displayWidth, int displayHeight) {
         super(context);
         getHolder().addCallback(this);
         setFocusable(true);

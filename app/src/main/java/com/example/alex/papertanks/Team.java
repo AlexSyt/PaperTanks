@@ -1,6 +1,6 @@
 package com.example.alex.papertanks;
 
-enum Team {
+public enum Team {
     RED,
     BLUE
 }

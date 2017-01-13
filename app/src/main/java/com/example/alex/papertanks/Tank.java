@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-class Tank {
+public class Tank {
     private Bitmap bitmap;
     private int xBitmap;
     private int yBitmap;
@@ -19,7 +19,7 @@ class Tank {
     private boolean destroyed;
     private Team team;
 
-    Tank(Bitmap bitmap, int x, int y, Team team) {
+    public Tank(Bitmap bitmap, int x, int y, Team team) {
         this.bitmap = bitmap;
         this.xBitmap = x;
         this.yBitmap = y;
@@ -30,51 +30,51 @@ class Tank {
         destroyed = false;
     }
 
-    int getX() {
+    public int getX() {
         return xBitmap;
     }
 
-    int getY() {
+    public int getY() {
         return yBitmap;
     }
 
-    int getHealth() {
+    public int getHealth() {
         return health;
     }
 
-    void setHealth(int health) {
+    public void setHealth(int health) {
         this.health = health;
     }
 
-    boolean isTouched() {
+    public boolean isTouched() {
         return touched;
     }
 
-    void setTouched(boolean touched) {
+    public void setTouched(boolean touched) {
         this.touched = touched;
     }
 
-    boolean isSelected() {
+    public boolean isSelected() {
         return selected;
     }
 
-    void setSelected(boolean selected) {
+    public void setSelected(boolean selected) {
         this.selected = selected;
     }
 
-    boolean isDestroyed() {
+    public boolean isDestroyed() {
         return destroyed;
     }
 
-    void setDestroyed(boolean destroyed) {
+    public void setDestroyed(boolean destroyed) {
         this.destroyed = destroyed;
     }
 
-    Team getTeam() {
+    public Team getTeam() {
         return team;
     }
 
-    void draw(Canvas canvas) {
+    public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, xBitmap, yBitmap, null);
 
 
@@ -101,13 +101,13 @@ class Tank {
         yTankRightBottom = yBitmap + (bitmap.getHeight() / 3) * 2;
     }
 
-    void handleActionDown(int eventX, int eventY) {
+    public void handleActionDown(int eventX, int eventY) {
         if (eventX >= (xTankLeftTop) && (eventX <= (xTankRightBottom)))
             this.touched = eventY >= (yTankLeftTop) && (eventY <= (yTankRightBottom));
         else this.touched = false;
     }
 
-    void move(float dx, float dy) {
+    public void move(float dx, float dy) {
         xBitmap += dx;
         yBitmap += dy;
     }
