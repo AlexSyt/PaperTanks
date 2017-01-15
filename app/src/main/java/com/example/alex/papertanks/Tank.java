@@ -30,12 +30,20 @@ public class Tank {
         destroyed = false;
     }
 
-    public int getX() {
-        return xBitmap;
+    public int get_xTankLeftTop() {
+        return xTankLeftTop;
     }
 
-    public int getY() {
-        return yBitmap;
+    public int get_yTankLeftTop() {
+        return yTankLeftTop;
+    }
+
+    public int get_xTankRightBottom() {
+        return xTankRightBottom;
+    }
+
+    public int get_yTankRightBottom() {
+        return yTankRightBottom;
     }
 
     public int getHealth() {
@@ -68,10 +76,6 @@ public class Tank {
 
     public void setDestroyed(boolean destroyed) {
         this.destroyed = destroyed;
-    }
-
-    public Team getTeam() {
-        return team;
     }
 
     public void draw(Canvas canvas) {
@@ -107,9 +111,27 @@ public class Tank {
         else this.touched = false;
     }
 
-    public void move(float dx, float dy) {
-        xBitmap += dx;
-        yBitmap += dy;
+    public void move(float dx, float dy, Tank[] tanks) {
+        if (isPossible(tanks, dx, dy)) {
+            xBitmap += dx;
+            yBitmap += dy;
+        }
+    }
+
+    // check the intersection with other tanks
+    private boolean isPossible(Tank[] tanks, float dx, float dy) {
+        for (Tank tank : tanks)
+            if (!tank.isSelected()) {
+                int left = tank.get_xTankLeftTop();
+                int right = tank.get_xTankRightBottom();
+                int top = tank.get_yTankLeftTop();
+                int bottom = tank.get_yTankRightBottom();
+                if (xTankLeftTop + dx > right || left > xTankRightBottom + dx ||
+                        yTankLeftTop + dy > bottom || top > yTankRightBottom + dy)
+                    continue;
+                else return false;
+            }
+        return true;
     }
 }
 

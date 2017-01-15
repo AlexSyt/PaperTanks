@@ -88,7 +88,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
         if (action == MotionEvent.ACTION_MOVE) {
             if (selected.isTouched()) {
-                selected.move(event.getX() - xTouch, event.getY() - yTouch);
+                selected.move(event.getX() - xTouch, event.getY() - yTouch, tanks);
                 xTouch = event.getX();
                 yTouch = event.getY();
             }
