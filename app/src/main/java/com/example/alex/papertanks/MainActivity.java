@@ -14,6 +14,6 @@ public class MainActivity extends AppCompatActivity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        setContentView(new MainGamePanel(this, size.x, size.y));
+        setContentView(new MainGamePanel(this, size));
     }
 }

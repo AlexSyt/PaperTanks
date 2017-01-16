@@ -1,18 +1,12 @@
 package com.example.alex.papertanks;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+import android.graphics.*;
 
 public class Tank {
     private Bitmap bitmap;
-    private int xBitmap;
-    private int yBitmap;
-    private int xTankLeftTop;
-    private int yTankLeftTop;
-    private int xTankRightBottom;
-    private int yTankRightBottom;
+    private Point bitmapPosition;
+    private Point tankLeftTop;
+    private Point tankRightBottom;
     private int health;
     private boolean touched;
     private boolean selected;
@@ -21,29 +15,22 @@ public class Tank {
 
     public Tank(Bitmap bitmap, int x, int y, Team team) {
         this.bitmap = bitmap;
-        this.xBitmap = x;
-        this.yBitmap = y;
         this.team = team;
+        bitmapPosition = new Point(x, y);
+        tankLeftTop = new Point();
+        tankRightBottom = new Point();
         health = 100;
         touched = false;
         selected = false;
         destroyed = false;
     }
 
-    public int get_xTankLeftTop() {
-        return xTankLeftTop;
+    public Point getTankLeftTop() {
+        return tankLeftTop;
     }
 
-    public int get_yTankLeftTop() {
-        return yTankLeftTop;
-    }
-
-    public int get_xTankRightBottom() {
-        return xTankRightBottom;
-    }
-
-    public int get_yTankRightBottom() {
-        return yTankRightBottom;
+    public Point getTankRightBottom() {
+        return tankRightBottom;
     }
 
     public int getHealth() {
@@ -79,7 +66,7 @@ public class Tank {
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, xBitmap, yBitmap, null);
+        canvas.drawBitmap(bitmap, bitmapPosition.x, bitmapPosition.y, null);
 
 
         Paint p = new Paint();
@@ -88,33 +75,33 @@ public class Tank {
         pSelected.setColor(Color.GREEN);
         initTankCoordinates();
         if (selected)
-            canvas.drawRect(xTankLeftTop, yTankLeftTop, xTankRightBottom, yTankRightBottom, pSelected);
+            canvas.drawRect(tankLeftTop.x, tankLeftTop.y, tankRightBottom.x, tankRightBottom.y, pSelected);
         else
-            canvas.drawRect(xTankLeftTop, yTankLeftTop, xTankRightBottom, yTankRightBottom, p);
+            canvas.drawRect(tankLeftTop.x, tankLeftTop.y, tankRightBottom.x, tankRightBottom.y, p);
     }
 
     private void initTankCoordinates() {
         if (this.team == Team.BLUE) {
-            xTankLeftTop = xBitmap + bitmap.getWidth() / 6;
-            xTankRightBottom = xBitmap + (bitmap.getWidth() / 5) * 4;
+            tankLeftTop.x = bitmapPosition.x + bitmap.getWidth() / 6;
+            tankRightBottom.x = bitmapPosition.x + (bitmap.getWidth() / 5) * 4;
         } else if (this.team == Team.RED) {
-            xTankLeftTop = xBitmap + bitmap.getWidth() / 6;
-            xTankRightBottom = xBitmap + (bitmap.getWidth() / 7) * 6;
+            tankLeftTop.x = bitmapPosition.x + bitmap.getWidth() / 6;
+            tankRightBottom.x = bitmapPosition.x + (bitmap.getWidth() / 7) * 6;
         }
-        yTankLeftTop = (int) (yBitmap + bitmap.getHeight() / 3.8);
-        yTankRightBottom = yBitmap + (bitmap.getHeight() / 3) * 2;
+        tankLeftTop.y = (int) (bitmapPosition.y + bitmap.getHeight() / 3.8);
+        tankRightBottom.y = bitmapPosition.y + (bitmap.getHeight() / 3) * 2;
     }
 
     public void handleActionDown(int eventX, int eventY) {
-        if (eventX >= (xTankLeftTop) && (eventX <= (xTankRightBottom)))
-            this.touched = eventY >= (yTankLeftTop) && (eventY <= (yTankRightBottom));
+        if (eventX >= (tankLeftTop.x) && (eventX <= (tankRightBottom.x)))
+            this.touched = eventY >= (tankLeftTop.y) && (eventY <= (tankRightBottom.y));
         else this.touched = false;
     }
 
     public void move(float dx, float dy, Tank[] tanks) {
         if (isPossible(tanks, dx, dy)) {
-            xBitmap += dx;
-            yBitmap += dy;
+            bitmapPosition.x += dx;
+            bitmapPosition.y += dy;
         }
     }
 
@@ -122,12 +109,10 @@ public class Tank {
     private boolean isPossible(Tank[] tanks, float dx, float dy) {
         for (Tank tank : tanks)
             if (!tank.isSelected()) {
-                int left = tank.get_xTankLeftTop();
-                int right = tank.get_xTankRightBottom();
-                int top = tank.get_yTankLeftTop();
-                int bottom = tank.get_yTankRightBottom();
-                if (xTankLeftTop + dx > right || left > xTankRightBottom + dx ||
-                        yTankLeftTop + dy > bottom || top > yTankRightBottom + dy)
+                Point leftTop = tank.getTankLeftTop();
+                Point rightBottom = tank.getTankRightBottom();
+                if (this.tankLeftTop.x + dx > rightBottom.x || leftTop.x > this.tankRightBottom.x + dx ||
+                        this.tankLeftTop.y + dy > rightBottom.y || leftTop.y > this.tankRightBottom.y + dy)
                     continue;
                 else return false;
             }

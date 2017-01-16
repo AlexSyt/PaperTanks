@@ -1,49 +1,44 @@
 package com.example.alex.papertanks;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.*;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
-    private int displayWidth;
-    private int displayHeight;
-    private float xTouch;
-    private float yTouch;
+    private Point displaySize;
+    private PointF touchLocation;
     private int tankCount;
     private Tank[] tanks;
     private Tank selected;
 
-    public MainGamePanel(Context context, int displayWidth, int displayHeight) {
+    public MainGamePanel(Context context, Point displaySize) {
         super(context);
         getHolder().addCallback(this);
         setFocusable(true);
-        this.displayWidth = displayWidth;
-        this.displayHeight = displayHeight;
+        this.displaySize = displaySize;
+        touchLocation = new PointF();
         initTanks();
     }
 
     private void initTanks() {
-        int tankBitmapSize = displayWidth / 4;
-        int indent = tankBitmapSize / 6;
+        int tankBitmapWidth = displaySize.x / 5;
+        int indent = tankBitmapWidth / 6;
 
         Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.blue_tank);
-        blue = Bitmap.createScaledBitmap(blue, tankBitmapSize, tankBitmapSize, false);
+        blue = Bitmap.createScaledBitmap(blue, tankBitmapWidth, tankBitmapWidth, false);
         Bitmap red = BitmapFactory.decodeResource(getResources(), R.drawable.red_tank);
-        red = Bitmap.createScaledBitmap(red, tankBitmapSize, tankBitmapSize, false);
+        red = Bitmap.createScaledBitmap(red, tankBitmapWidth, tankBitmapWidth, false);
 
         tanks = new Tank[6];
         tanks[0] = new Tank(blue, indent, 0, Team.BLUE);
-        tanks[1] = new Tank(red, displayWidth - tankBitmapSize - indent, 0, Team.RED);
-        tanks[2] = new Tank(blue, indent, (displayHeight / 2) - (tankBitmapSize / 2), Team.BLUE);
-        tanks[3] = new Tank(red, displayWidth - tankBitmapSize - indent, (displayHeight / 2) - (tankBitmapSize / 2), Team.RED);
-        tanks[4] = new Tank(blue, indent, displayHeight - tankBitmapSize, Team.BLUE);
-        tanks[5] = new Tank(red, displayWidth - tankBitmapSize - indent, displayHeight - tankBitmapSize, Team.RED);
+        tanks[1] = new Tank(red, displaySize.x - tankBitmapWidth - indent, 0, Team.RED);
+        tanks[2] = new Tank(blue, indent, (displaySize.y / 2) - (tankBitmapWidth / 2), Team.BLUE);
+        tanks[3] = new Tank(red, displaySize.x - tankBitmapWidth - indent, (displaySize.y / 2) - (tankBitmapWidth / 2), Team.RED);
+        tanks[4] = new Tank(blue, indent, displaySize.y - tankBitmapWidth, Team.BLUE);
+        tanks[5] = new Tank(red, displaySize.x - tankBitmapWidth - indent, displaySize.y - tankBitmapWidth, Team.RED);
 
         selected = tanks[0];
         selected.setSelected(true);
@@ -81,16 +76,16 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         int action = event.getAction();
 
         if (action == MotionEvent.ACTION_DOWN) {
-            xTouch = event.getX();
-            yTouch = event.getY();
+            touchLocation.x = event.getX();
+            touchLocation.y = event.getY();
             selected.handleActionDown((int) event.getX(), (int) event.getY());
         }
 
         if (action == MotionEvent.ACTION_MOVE) {
             if (selected.isTouched()) {
-                selected.move(event.getX() - xTouch, event.getY() - yTouch, tanks);
-                xTouch = event.getX();
-                yTouch = event.getY();
+                selected.move(event.getX() - touchLocation.x, event.getY() - touchLocation.y, tanks);
+                touchLocation.x = event.getX();
+                touchLocation.y = event.getY();
             }
         }
 
