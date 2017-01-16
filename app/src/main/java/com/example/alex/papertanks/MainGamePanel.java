@@ -24,21 +24,21 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     private void initTanks() {
-        int tankBitmapWidth = displaySize.x / 5;
-        int indent = tankBitmapWidth / 6;
+        int tankBitmapSize = displaySize.x / 5; // tank bitmap is a square
+        int indent = tankBitmapSize / 6;
 
         Bitmap blue = BitmapFactory.decodeResource(getResources(), R.drawable.blue_tank);
-        blue = Bitmap.createScaledBitmap(blue, tankBitmapWidth, tankBitmapWidth, false);
+        blue = Bitmap.createScaledBitmap(blue, tankBitmapSize, tankBitmapSize, false);
         Bitmap red = BitmapFactory.decodeResource(getResources(), R.drawable.red_tank);
-        red = Bitmap.createScaledBitmap(red, tankBitmapWidth, tankBitmapWidth, false);
+        red = Bitmap.createScaledBitmap(red, tankBitmapSize, tankBitmapSize, false);
 
         tanks = new Tank[6];
         tanks[0] = new Tank(blue, indent, 0, Team.BLUE);
-        tanks[1] = new Tank(red, displaySize.x - tankBitmapWidth - indent, 0, Team.RED);
-        tanks[2] = new Tank(blue, indent, (displaySize.y / 2) - (tankBitmapWidth / 2), Team.BLUE);
-        tanks[3] = new Tank(red, displaySize.x - tankBitmapWidth - indent, (displaySize.y / 2) - (tankBitmapWidth / 2), Team.RED);
-        tanks[4] = new Tank(blue, indent, displaySize.y - tankBitmapWidth, Team.BLUE);
-        tanks[5] = new Tank(red, displaySize.x - tankBitmapWidth - indent, displaySize.y - tankBitmapWidth, Team.RED);
+        tanks[1] = new Tank(red, displaySize.x - tankBitmapSize - indent, 0, Team.RED);
+        tanks[2] = new Tank(blue, indent, (displaySize.y / 2) - (tankBitmapSize / 2), Team.BLUE);
+        tanks[3] = new Tank(red, displaySize.x - tankBitmapSize - indent, (displaySize.y / 2) - (tankBitmapSize / 2), Team.RED);
+        tanks[4] = new Tank(blue, indent, displaySize.y - tankBitmapSize, Team.BLUE);
+        tanks[5] = new Tank(red, displaySize.x - tankBitmapSize - indent, displaySize.y - tankBitmapSize, Team.RED);
 
         selected = tanks[0];
         selected.setSelected(true);
