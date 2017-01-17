@@ -98,25 +98,9 @@ public class Tank {
         else this.touched = false;
     }
 
-    public void move(float dx, float dy, Tank[] tanks) {
-        if (isPossible(tanks, dx, dy)) {
-            bitmapPosition.x += dx;
-            bitmapPosition.y += dy;
-        }
-    }
-
-    // check the intersection with other tanks
-    private boolean isPossible(Tank[] tanks, float dx, float dy) {
-        for (Tank tank : tanks)
-            if (!tank.isSelected()) {
-                Point leftTop = tank.getTankLeftTop();
-                Point rightBottom = tank.getTankRightBottom();
-                if (this.tankLeftTop.x + dx > rightBottom.x || leftTop.x > this.tankRightBottom.x + dx ||
-                        this.tankLeftTop.y + dy > rightBottom.y || leftTop.y > this.tankRightBottom.y + dy)
-                    continue;
-                else return false;
-            }
-        return true;
+    public void move(float dx, float dy) {
+        bitmapPosition.x += dx;
+        bitmapPosition.y += dy;
     }
 }
 

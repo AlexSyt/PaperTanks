@@ -83,7 +83,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
         if (action == MotionEvent.ACTION_MOVE) {
             if (selected.isTouched()) {
-                selected.move(event.getX() - touchLocation.x, event.getY() - touchLocation.y, tanks);
+                if (moveIsPossible(event.getX() - touchLocation.x, event.getY() - touchLocation.y))
+                    selected.move(event.getX() - touchLocation.x, event.getY() - touchLocation.y);
                 touchLocation.x = event.getX();
                 touchLocation.y = event.getY();
             }
@@ -96,6 +97,22 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
             }
         }
 
+        return true;
+    }
+
+    // check the intersection with other tanks
+    private boolean moveIsPossible(float dx, float dy) {
+        for (Tank tank : tanks)
+            if (!tank.isSelected()) {
+                Point leftTop = tank.getTankLeftTop();
+                Point rightBottom = tank.getTankRightBottom();
+                Point selectedLeftTop = selected.getTankLeftTop();
+                Point selectedRightBottom = selected.getTankRightBottom();
+                if (selectedLeftTop.x + dx > rightBottom.x || leftTop.x > selectedRightBottom.x + dx ||
+                        selectedLeftTop.y + dy > rightBottom.y || leftTop.y > selectedRightBottom.y + dy)
+                    continue;
+                else return false;
+            }
         return true;
     }
 
