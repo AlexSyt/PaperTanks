@@ -4,9 +4,9 @@ import android.graphics.*;
 
 public class Tank {
     private Bitmap bitmap;
-    private Point bitmapPosition;
-    private Point tankLeftTop;
-    private Point tankRightBottom;
+    private Point bitmapPosition;  // top left point of the bitmap
+    private Point tankLeftTop;     // the size of the bitmap larger than the size of the tank
+    private Point tankRightBottom; // so we must keep the location of the tank
     private int health;
     private boolean touched;
     private boolean selected;
@@ -71,9 +71,10 @@ public class Tank {
 
         Paint p = new Paint();
         p.setStyle(Paint.Style.STROKE);
-        Paint pSelected = new Paint();
+        Paint pSelected = new Paint(); // paint for selected tank
         pSelected.setColor(Color.GREEN);
         initTankCoordinates();
+        // drawing the boundaries of tank:
         if (selected)
             canvas.drawRect(tankLeftTop.x, tankLeftTop.y, tankRightBottom.x, tankRightBottom.y, pSelected);
         else
