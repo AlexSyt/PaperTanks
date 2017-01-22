@@ -2,6 +2,7 @@ package com.example.alex.papertanks;
 
 import android.content.Context;
 import android.graphics.*;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -14,11 +15,20 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     private Tank[] tanks;
     private Tank selected;
 
-    public MainGamePanel(Context context, Point displaySize) {
+    public MainGamePanel(Context context) {
         super(context);
         getHolder().addCallback(this);
         setFocusable(true);
-        this.displaySize = displaySize;
+        this.displaySize = new Point(540, 960);
+        touchLocation = new PointF();
+        initTanks();
+    }
+
+    public MainGamePanel(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        getHolder().addCallback(this);
+        setFocusable(true);
+        this.displaySize = new Point(1500, 960);
         touchLocation = new PointF();
         initTanks();
     }
