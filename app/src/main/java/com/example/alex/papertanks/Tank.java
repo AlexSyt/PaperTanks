@@ -7,10 +7,8 @@ public class Tank {
     private Point bitmapPosition;  // top left point of the bitmap
     private Point tankLeftTop;     // the size of the bitmap larger than the size of the tank
     private Point tankRightBottom; // so we must keep the location of the tank
-    private int health;
     private boolean touched;
     private boolean selected;
-    private boolean destroyed;
     private Team team;
 
     public Tank(Bitmap bitmap, int x, int y, Team team) {
@@ -19,10 +17,8 @@ public class Tank {
         bitmapPosition = new Point(x, y);
         tankLeftTop = new Point();
         tankRightBottom = new Point();
-        health = 100;
         touched = false;
         selected = false;
-        destroyed = false;
     }
 
     public Point getTankLeftTop() {
@@ -31,14 +27,6 @@ public class Tank {
 
     public Point getTankRightBottom() {
         return tankRightBottom;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
     }
 
     public boolean isTouched() {
@@ -55,14 +43,6 @@ public class Tank {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
-    }
-
-    public boolean isDestroyed() {
-        return destroyed;
-    }
-
-    public void setDestroyed(boolean destroyed) {
-        this.destroyed = destroyed;
     }
 
     public void draw(Canvas canvas) {
