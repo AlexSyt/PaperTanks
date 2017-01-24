@@ -8,8 +8,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
+    public static Point displaySize = new Point();
     private MainThread thread;
-    private Point displaySize;
     private PointF touchLocation;
     private int tankCount;
     private Tank[] tanks;
@@ -17,18 +17,17 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     public MainGamePanel(Context context) {
         super(context);
-        getHolder().addCallback(this);
-        setFocusable(true);
-        this.displaySize = new Point(540, 960);
-        touchLocation = new PointF();
-        initTanks();
+        init();
     }
 
     public MainGamePanel(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
+
+    private void init() {
         getHolder().addCallback(this);
         setFocusable(true);
-        this.displaySize = new Point(1500, 960);
         touchLocation = new PointF();
         initTanks();
     }
