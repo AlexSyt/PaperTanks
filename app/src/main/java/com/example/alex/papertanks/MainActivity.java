@@ -6,7 +6,7 @@ import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,20 +17,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_game_panel);
 
         Button next = (Button) findViewById(R.id.next);
-        next.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainGamePanel.selectNextTank();
-            }
-        });
+        next.setOnClickListener(this);
 
         Button exit = (Button) findViewById(R.id.exit);
-        exit.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        exit.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.next:
+                MainGamePanel.selectNextTank();
+                break;
+            case R.id.exit:
                 finish();
                 System.exit(0);
-            }
-        });
+                break;
+        }
     }
 }
