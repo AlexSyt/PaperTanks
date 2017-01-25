@@ -9,11 +9,11 @@ import android.view.SurfaceView;
 
 public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static Point displaySize = new Point(540, 960); // default values
+    private static int tankCount;
+    private static Tank[] tanks;
+    private static Tank selected;
     private MainThread thread;
     private PointF touchLocation;
-    private int tankCount;
-    private Tank[] tanks;
-    private Tank selected;
 
     public MainGamePanel(Context context) {
         super(context);
@@ -125,7 +125,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         return true;
     }
 
-    private void selectNextTank() {
+    static public void selectNextTank() {
         if (tankCount > 5) tankCount = 0;
         selected.setSelected(false);
         selected = tanks[tankCount];
