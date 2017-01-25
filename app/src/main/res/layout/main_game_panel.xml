@@ -18,8 +18,8 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fire"
-                android:id="@+id/fire"/>
+                android:text="Exit"
+                android:id="@+id/exit"/>
 
         <Button
                 android:layout_width="wrap_content"

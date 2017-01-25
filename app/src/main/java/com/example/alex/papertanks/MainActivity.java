@@ -19,8 +19,17 @@ public class MainActivity extends AppCompatActivity {
         Button next = (Button) findViewById(R.id.next);
         next.setOnClickListener(new Button.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View view) {
                 MainGamePanel.selectNextTank();
+            }
+        });
+
+        Button exit = (Button) findViewById(R.id.exit);
+        exit.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                System.exit(0);
             }
         });
     }
