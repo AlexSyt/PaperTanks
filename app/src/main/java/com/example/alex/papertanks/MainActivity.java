@@ -1,5 +1,6 @@
 package com.example.alex.papertanks;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
@@ -7,14 +8,20 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    MainGamePanel mainGamePanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+
         Display display = getWindowManager().getDefaultDisplay();
-        display.getSize(MainGamePanel.displaySize);
+        Point displaySize = new Point();
+        display.getSize(displaySize);
+
         setContentView(R.layout.main_game_panel);
+        mainGamePanel = (MainGamePanel) findViewById(R.id.main_game_panel);
+        mainGamePanel.initTanks(displaySize);
 
         Button btnNext = (Button) findViewById(R.id.btnNext);
         btnNext.setOnClickListener(this);
@@ -27,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNext:
-                MainGamePanel.selectNextTank();
+                mainGamePanel.selectNextTank();
                 break;
             case R.id.btnExit:
                 finish();

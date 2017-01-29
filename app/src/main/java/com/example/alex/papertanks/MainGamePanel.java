@@ -8,10 +8,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
-    public static Point displaySize = new Point(540, 960); // default values
-    private static int tankCount;
-    private static Tank[] tanks;
-    private static Tank selected;
+    private int tankCount;
+    private Tank[] tanks;
+    private Tank selected;
     private MainThread thread;
     private PointF touchLocation;
 
@@ -29,10 +28,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         getHolder().addCallback(this);
         setFocusable(true);
         touchLocation = new PointF();
-        initTanks();
     }
 
-    private void initTanks() {
+    public void initTanks(Point displaySize) {
         int tankBitmapSize = displaySize.x / 5; // tank bitmap is a square
         int indent = tankBitmapSize / 6;
 
@@ -125,7 +123,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         return true;
     }
 
-    static public void selectNextTank() {
+    public void selectNextTank() {
         if (tankCount > 5) tankCount = 0;
         selected.setSelected(false);
         selected = tanks[tankCount];
@@ -136,7 +134,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void onDraw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
-        for (Tank tank : tanks)
-            tank.draw(canvas);
+        if (tanks != null)
+            for (Tank tank : tanks)
+                tank.draw(canvas);
     }
 }
