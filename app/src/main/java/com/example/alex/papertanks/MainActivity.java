@@ -13,7 +13,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point displaySize = new Point();
