@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PaperTanks</string>
+    <string name="exit">Exit</string>
+    <string name="next">Next</string>
 </resources>

@@ -18,13 +18,13 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Exit"
+                android:text="@string/exit"
                 android:id="@+id/btnExit"/>
 
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next"
+                android:text="@string/next"
                 android:id="@+id/btnNext"/>
     </LinearLayout>
 
