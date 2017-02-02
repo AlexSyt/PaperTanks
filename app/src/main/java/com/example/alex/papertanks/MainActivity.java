@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mainGamePanel.selectNextTank();
                 break;
             case R.id.btnExit:
+                mainGamePanel.stop();
                 finish();
-                System.exit(0);
                 break;
         }
     }
