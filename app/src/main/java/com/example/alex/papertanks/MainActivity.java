@@ -4,10 +4,9 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
-import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     MainGamePanel mainGamePanel;
 
     @Override
@@ -23,22 +22,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainGamePanel.initTanks(displaySize);
 
         Button btnNext = (Button) findViewById(R.id.btnNext);
-        btnNext.setOnClickListener(this);
+        btnNext.setOnClickListener(v -> mainGamePanel.selectNextTank());
 
         Button btnExit = (Button) findViewById(R.id.btnExit);
-        btnExit.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnNext:
-                mainGamePanel.selectNextTank();
-                break;
-            case R.id.btnExit:
-                mainGamePanel.stop();
-                finish();
-                break;
-        }
+        btnExit.setOnClickListener(v -> {
+            mainGamePanel.stop();
+            finish();
+        });
     }
 }
