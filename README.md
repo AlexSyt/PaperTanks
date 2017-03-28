@@ -1,2 +1,2 @@
 # PaperTanks
-Training project in order to improve the skills in Android Development.
+First experience with SurfaceView. It's better not to look :3
